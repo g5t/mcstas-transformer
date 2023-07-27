@@ -1,0 +1,51 @@
+/*******************************************************************************
+*
+* McStas, neutron ray-tracing package
+*         Copyright (C) 1997-2007, All rights reserved
+*         Risoe National Laboratory, Roskilde, Denmark
+*         Institut Laue Langevin, Grenoble, France
+*
+* Component: Transformer
+*
+* %I
+* Written by: Gregory Tucker
+* Date: Jul 12 2023
+* Origin: <a href="http://www.ess.eu">ESS</a>
+* Multiple infinitly thin slits at a constant radius from the origin.
+*
+* %End
+*******************************************************************************/
+
+DEFINE COMPONENT Transformer
+SETTING PARAMETERS (Rx=0, Ry=0, Rz=0)
+OUTPUT PARAMETERS ()
+SHARE 
+%{
+%}
+DECLARE
+%{
+  Rotation rot;
+%}
+INITIALIZE
+%{
+  rot_set_rotation(rot, Rx, Ry, Rz);
+%}
+TRACE
+%{
+  coords_get(rot_apply(rot, coords_set(x, y, z)), &x, &y, &z);
+  coords_get(rot_apply(rot, coords_set(vx, vy, vz)), &vx, &vy, &vz);
+%}
+FINALLY
+%{
+%}
+
+MCDISPLAY
+%{
+double radius=0.01;
+circle("xy", 0, 0, 0, radius * fabs(Rz));
+circle("xz", 0, 0, 0, radius * fabs(Ry));
+circle("yz", 0, 0, 0, radius * fabs(Rx));
+
+%}
+
+END
