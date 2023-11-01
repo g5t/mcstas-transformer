@@ -10,8 +10,12 @@
 * %I
 * Written by: Gregory Tucker
 * Date: Jul 12 2023
+* Updates:
+*	Nov 1 2023: Improved display, shows rotations rather than a circle scaled by rotation angle
+*
 * Origin: <a href="http://www.ess.eu">ESS</a>
-* Multiple infinitly thin slits at a constant radius from the origin.
+* Coordinate system transformation for, e.g., runtime-defined and -modified sample or
+* detector orientations.
 *
 * %End
 *******************************************************************************/
@@ -41,11 +45,64 @@ FINALLY
 
 MCDISPLAY
 %{
-double radius=0.01;
-circle("xy", 0, 0, 0, radius * fabs(Rz));
-circle("xz", 0, 0, 0, radius * fabs(Ry));
-circle("yz", 0, 0, 0, radius * fabs(Rx));
-
+int n=120;
+double radius=1.0;
+if ((fabs(Rx) > 0) || (fabs(Ry) > 0) || (fabs(Rz) > 0)) {
+  // Draw dashed circle(s) in the plane(s) of rotation
+  for (int i=0; i<n; i+=2){
+    double t1 = DEG2RAD * (double)(i)/360.0;
+    double t2 = DEG2RAD * (double)(i+1)/360.0;
+    double c1 = radius * cos(t1);
+    double s1 = radius * sin(t1);
+    double c2 = radius * cos(t2);
+    double s2 = radius * sin(t2);
+    if (fabs(Rx) > 0.0) line(0.0, c1, s1, 0.0, c2, s2);
+    if (fabs(Ry) > 0.0) line(c1, 0.0, s1, c2, 0.0, s2);
+    if (fabs(Rz) > 0.0) line(c1, s1, 0.0, c2, s2, 0.0);
+  }
+}
+if (fabs(Rz) > 0}) {
+  double c0 = radius;
+  double s0 = 0.0;
+  line(0.0, 0.0, 0.0, c0, s0, 0.0);
+  for (int i=1; i<n; ++i){
+    double theta = DEG2RAD * Rz * (double) i / (double)(n-1) ;
+    double c1 = radius * cos(theta);
+    double s1 = radius * sin(theta);
+    line(c0, s0, 0.0, c1, s1, 0.0);
+    c0 = c1;
+    s0 = s1;
+  }
+  dashed_line(c0, s0, 0.0, 0.0, 0.0, 0.0);
+}
+if (fabs(Ry) > 0}) {
+  double c0 = radius;
+  double s0 = 0.0;
+  line(0.0, 0.0, 0.0, c0, 0.0, s0);
+  for (int i=1; i<n; ++i){
+    double theta = DEG2RAD * Ry * (double) i / (double)(n-1) ;
+    double c1 = radius * cos(theta);
+    double s1 = radius * sin(theta);
+    line(c0, 0.0, s0, 0.0, c1, 0.0, s1);
+    c0 = c1;
+    s0 = s1;
+  }
+  dashed_line(c0, 0.0, s0, 0.0, 0.0, 0.0);
+}
+if (fabs(Rx) > 0}) {
+  double c0 = radius;
+  double s0 = 0.0;
+  line(0.0, 0.0, 0.0, 0.0, c0, s0);
+  for (int i=1; i<n; ++i){
+    double theta = DEG2RAD * Rx * (double) i / (double)(n-1) ;
+    double c1 = radius * cos(theta);
+    double s1 = radius * sin(theta);
+    line(0.0, c0, s0, 0.0, c1, s1);
+    c0 = c1;
+    s0 = s1;
+  }
+  dashed_line(0.0, c0, s0, 0.0, 0.0, 0.0);
+}
 %}
 
 END
