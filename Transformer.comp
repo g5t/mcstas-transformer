@@ -61,7 +61,7 @@ if ((fabs(Rx) > 0) || (fabs(Ry) > 0) || (fabs(Rz) > 0)) {
     if (fabs(Rz) > 0.0) line(c1, s1, 0.0, c2, s2, 0.0);
   }
 }
-if (fabs(Rz) > 0}) {
+if (fabs(Rz) > 0) {
   double c0 = radius;
   double s0 = 0.0;
   line(0.0, 0.0, 0.0, c0, s0, 0.0);
@@ -75,7 +75,7 @@ if (fabs(Rz) > 0}) {
   }
   dashed_line(c0, s0, 0.0, 0.0, 0.0, 0.0);
 }
-if (fabs(Ry) > 0}) {
+if (fabs(Ry) > 0) {
   double c0 = radius;
   double s0 = 0.0;
   line(0.0, 0.0, 0.0, c0, 0.0, s0);
@@ -89,7 +89,7 @@ if (fabs(Ry) > 0}) {
   }
   dashed_line(c0, 0.0, s0, 0.0, 0.0, 0.0);
 }
-if (fabs(Rx) > 0}) {
+if (fabs(Rx) > 0) {
   double c0 = radius;
   double s0 = 0.0;
   line(0.0, 0.0, 0.0, 0.0, c0, s0);
