@@ -73,7 +73,7 @@ if (fabs(Rz) > 0) {
     c0 = c1;
     s0 = s1;
   }
-  dashed_line(c0, s0, 0.0, 0.0, 0.0, 0.0);
+  dashed_line(c0, s0, 0.0, 0.0, 0.0, 0.0, 5);
 }
 if (fabs(Ry) > 0) {
   double c0 = radius;
@@ -83,11 +83,11 @@ if (fabs(Ry) > 0) {
     double theta = DEG2RAD * Ry * (double) i / (double)(n-1) ;
     double c1 = radius * cos(theta);
     double s1 = radius * sin(theta);
-    line(c0, 0.0, s0, 0.0, c1, 0.0, s1);
+    line(c0, 0.0, s0, c1, 0.0, s1);
     c0 = c1;
     s0 = s1;
   }
-  dashed_line(c0, 0.0, s0, 0.0, 0.0, 0.0);
+  dashed_line(c0, 0.0, s0, 0.0, 0.0, 0.0, 5);
 }
 if (fabs(Rx) > 0) {
   double c0 = radius;
@@ -101,7 +101,7 @@ if (fabs(Rx) > 0) {
     c0 = c1;
     s0 = s1;
   }
-  dashed_line(0.0, c0, s0, 0.0, 0.0, 0.0);
+  dashed_line(0.0, c0, s0, 0.0, 0.0, 0.0, 5);
 }
 %}
 
